@@ -3,6 +3,11 @@
 
 __author__ = '''Hyunju Kim'''
 
+#!/usr/bin/python
+#bioinfo.py
+
+__author__ = '''Hyunju Kim'''
+
 import os
 import sys
 import numpy as np
@@ -14,8 +19,8 @@ import input_net as inet
 import updating_rule as ur
 
 
-################# BEGIN: decimal_to_binary(nodes_list, decState, Nbr_States=2) ########################
-def decimal_to_binary(nodes_list, decState, Nbr_States=2): # more left in the nodes list means higher order of 2 in binary
+################# BEGIN: decimal_to_binary(nodes_list, decState, Nbr_States=4) ########################
+def decimal_to_binary(nodes_list, decState, Nbr_States=4): # more left in the nodes list means higher order of 2 in binary
     biStates = {}
     x = len(nodes_list) -1
     for u in nodes_list:
@@ -23,22 +28,23 @@ def decimal_to_binary(nodes_list, decState, Nbr_States=2): # more left in the no
         decState = decState % np.power(Nbr_States, x)
         x = x - 1
     return biStates
-################# END: decimal_to_binary(nodes_list, decState, Nbr_States=2) ########################
+################# END: decimal_to_binary(nodes_list, decState, Nbr_States=4) ########################
 
 
-################# BEGIN: binary_to_decimal(nodes_list, biStates, Nbr_States=2) ########################
-def binary_to_decimal(nodes_list, biStates, Nbr_States=2):  # more left in the nodes list means higher order of 2 in binary
+################# BEGIN: binary_to_decimal(nodes_list, biStates, Nbr_States=4) ########################
+def binary_to_decimal(nodes_list, biStates, Nbr_States=4):  # more left in the nodes list means higher order of 2 in binary
     decState = 0
     x = len(nodes_list) -1
     for u in nodes_list:
         decState = decState + biStates[u]  * np.power(Nbr_States, x)
         x = x - 1
     return decState
-################# END: binary_to_decimal(nodes_list, biStates, Nbr_States=2) ########################
+
+################# END: binary_to_decimal(nodes_list, biStates, Nbr_States=4) ########################
 
 '''
-################# BEGIN: biological_sequence(net, nodes_list, Nbr_States=2) ########################
-def biological_sequence(net, nodes_list, bio_initStates, fileName, Nbr_States=2):
+################# BEGIN: biological_sequence(net, nodes_list, Nbr_States=4) ########################
+def biological_sequence(net, nodes_list, bio_initStates, fileName, Nbr_States=4):
     bioSeq = []
     currBiStates = bio_initStates
     finished = False
@@ -65,11 +71,11 @@ def biological_sequence(net, nodes_list, bio_initStates, fileName, Nbr_States=2)
             OUTPUT_FILE.write('\t%d'%(bioSeq[i][u]))
         OUTPUT_FILE.write('\n')
     #return bioSeq
-################# END: biological_sequence(net, nodes_list, Nbr_States=2) ########################
+################# END: biological_sequence(net, nodes_list, Nbr_States=4) ########################
 '''
 
-################# BEGIN: time_series_en(net, nodes_list, Nbr_States=2, MAX_TimeStep=20, Transition_Step=0) ########################
-def time_series_all(net, nodes_list, Nbr_Initial_States, Nbr_States, MAX_TimeStep=20):
+################# BEGIN: time_series_en(net, nodes_list, Nbr_States=4, MAX_TimeStep=50, Transition_Step=0) ########################
+def time_series_all(net, nodes_list, Nbr_Initial_States, Nbr_States, MAX_TimeStep=50):
     
     '''
         Description:
@@ -104,11 +110,11 @@ def time_series_all(net, nodes_list, Nbr_Initial_States, Nbr_States, MAX_TimeSte
             currBiState = ur.sigmoid_updating(net, prevBiState)
 
     return timeSeriesData
-################# END: time_series_en(net, nodes_list, Nbr_States=2, MAX_TimeStep=20) ########################
+################# END: time_series_en(net, nodes_list, Nbr_States=4, MAX_TimeStep=50) ########################
 
 
-################# BEGIN: net_state_transition_map(net, nodes_list, Nbr_States=2) ########################
-def net_state_transition(net, nodes_list, Nbr_States=2):
+################# BEGIN: net_state_transition_map(net, nodes_list, Nbr_States=4) ########################
+def net_state_transition(net, nodes_list, Nbr_States=4):
 
     '''
     Arguments:
@@ -129,7 +135,7 @@ def net_state_transition(net, nodes_list, Nbr_States=2):
         decStateTransMap.add_edge(prevDecState, currDecState)
     return decStateTransMap
     
-################# END: net_state_transition_map(net, nodes_list, Nbr_States=2) ########################
+################# END: net_state_transition_map(net, nodes_list, Nbr_States=4) ########################
 
 
 ################# BEGIN: find_attractor_old(decStateTransMap) ########################
@@ -189,7 +195,7 @@ def find_attractor(decStateTransMap):
 ################# END: attractor_analysis(decStateTransMap) ########################
 
 
-################# BEGIN: time_series_pa(net, nodes_list, Initial_States_List, Nbr_States=2, MAX_TimeStep=20) ########################
+################# BEGIN: time_series_pa(net, nodes_list, Initial_States_List, Nbr_States=4, MAX_TimeStep=50) ########################
 def time_series_pa(net, nodes_list, Initial_States_List, Nbr_States, MAX_TimeStep=20):
     
     '''
@@ -222,10 +228,10 @@ def time_series_pa(net, nodes_list, Initial_States_List, Nbr_States, MAX_TimeSte
             currBiState = ur.sigmoid_updating(net, prevBiState)
 
     return timeSeriesData
-################# END: time_series_pa(net, nodes_list, Nbr_States=2, MAX_TimeStep=20) ########################
+################# END: time_series_pa(net, nodes_list, Nbr_States=4, MAX_TimeStep=50) ########################
 
 
-################# BEGIN: time_series_one(net, nodes_list, Initial_State, Nbr_States=2, MAX_TimeStep=20) ########################
+################# BEGIN: time_series_one(net, nodes_list, Initial_State, Nbr_States=4, MAX_TimeStep=50) ########################
 def time_series_one(net, nodes_list, Initial_State, Nbr_States, MAX_TimeStep=20):
     
     '''
@@ -258,7 +264,7 @@ def time_series_one(net, nodes_list, Initial_State, Nbr_States, MAX_TimeStep=20)
         currBiState = ur.sigmoid_updating(net, prevBiState)
 
     return timeSeriesData
-################# END: time_series_one(net, nodes_list, Initial_State, Nbr_States=2, MAX_TimeStep=20) ########################
+################# END: time_series_one(net, nodes_list, Initial_State, Nbr_States=4, MAX_TimeStep=50) ########################
 
 
 
@@ -266,14 +272,14 @@ def main():
     
     print "time_evol module is the main code."
     ## to import a network of 3-node example
-    EDGE_FILE = 'C:\Boolean_Delay_in_Economics\Manny\EDGE_FILE.dat'
-    NODE_FILE = 'C:\Boolean_Delay_in_Economics\Manny\NODE_FILE.dat'
+    EDGE_FILE = 'C:\Boolean_Delay_in_Economics\Gov\EDGE_FILE.dat'
+    NODE_FILE = 'C:\Boolean_Delay_in_Economics\Gov\EDGE_FILE.dat'
     
     net = inet.read_network_from_file(EDGE_FILE, NODE_FILE)
     nodes_list = inet.build_nodes_list(NODE_FILE)
     '''
     ## to obtain time series data for all possible initial conditions for 3-node example network
-    timeSeriesData = ensemble_time_series(net, nodes_list, 2, 10)#, Nbr_States=2, MAX_TimeStep=20)
+    timeSeriesData = ensemble_time_series(net, nodes_list, 2, 10)#, Nbr_States=4, MAX_TimeStep=50)
     initState = 1
     biStates = decimal_to_binary(nodes_list, initState)
     print 'initial state', biStates
@@ -282,20 +288,20 @@ def main():
     print 'a', timeSeriesData['a'][1]
     print 'b', timeSeriesData['b'][1]
     print 'c', timeSeriesData['c'][1]
-    '''
+    
     
     ## to obtain and visulaize transition map in the network state space
     decStateTransMap = net_state_transition(net, nodes_list)
     nx.write_graphml(decStateTransMap,'C:\Boolean_Delay_in_Economics\Manny\Results\BDE.graphml')
-    '''
+    
     nx.draw(decStateTransMap)
     plt.show()
     
     ## to find fixed point attractors and limited cycle attractors with given transition map.
     attractors = find_attractor(decStateTransMap)
     print attractors
-    '''
-'''
+    
+
     ## to obtain biological sequence for the Fission Yeast Cell-Cycle Net starting from biological inital state
     EDGE_FILE = 'C:\Boolean_Delay_in_Economics\Manny\EDGE_FILE.dat'
     NODE_FILE = 'C:\Boolean_Delay_in_Economics\Manny\NODE_FILE.dat'

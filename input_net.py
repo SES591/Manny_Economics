@@ -77,8 +77,8 @@ def read_init_from_file(BIO_INIT_FILE):
 
 def main():
     print "input_net module is the main code."
-    EDGE_FILE = 'C:\Boolean_Delay_in_Economics\Manny\EDGE_FILE.dat'
-    NODE_FILE = 'C:\Boolean_Delay_in_Economics\Manny\EDGE_FILE.dat'
+    EDGE_FILE = 'C:\Boolean_Delay_in_Economics\Gov\EDGE_FILE.dat'
+    NODE_FILE = 'C:\Boolean_Delay_in_Economics\Gov\EDGE_FILE.dat'
 
     net = read_network_from_file(EDGE_FILE, NODE_FILE)
     nodes_list = build_nodes_list(NODE_FILE)
