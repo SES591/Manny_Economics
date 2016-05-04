@@ -1,6 +1,6 @@
 #!/usr/bin/python
 #bionetworks.py
-#last update : 1=4 Aug 201=4
+#last update : 14 Aug 2014
 
 __author__ = '''Hyunju Kim'''
 
@@ -19,7 +19,7 @@ from collections import defaultdict
 
 
 ################# begin : build_historyList ############################
-def build_historyList(aList, historyLength, Nbr_States=4):
+def build_historyList(aList, historyLength, Nbr_States=2):
     '''
     Description:
         -- To generate a list of decimal states for k-previous states of a node with a given list of dynamical states of the nodes
@@ -51,7 +51,7 @@ def build_historyList(aList, historyLength, Nbr_States=4):
 
 
 ################## begin: compute_AI ########################
-def compute_AI(timeSeriesNode, historyLength, Nbr_Initial_States, Nbr_States=4):
+def compute_AI(timeSeriesNode, historyLength, Nbr_Initial_States, Nbr_States=2):
     '''
     Description:
     -- compute AI for every node using distribution from all possible initial conditions or an arbitrary set of initial conditions
@@ -76,7 +76,6 @@ def compute_AI(timeSeriesNode, historyLength, Nbr_Initial_States, Nbr_States=4):
     for si in range(Nbr_Initial_States):
         aList = list(timeSeriesNode[si])
         historyList = build_historyList(aList, historyLength, Nbr_States) # aList becomes aList[historyLength:] after historyList function
-        
         sampleLength = len(aList) * Nbr_Initial_States
         for s in range(len(aList)):
             prob_currState_hiState = float(count_currState_hiState[(aList[s], historyList[s])]) / float(sampleLength)
@@ -89,7 +88,7 @@ def compute_AI(timeSeriesNode, historyLength, Nbr_Initial_States, Nbr_States=4):
 
 
 ################## begin : compute_TE ########################
-def compute_TE(timeSeriesNodeA, timeSeriesNodeB, historyLength, Nbr_Initial_States, Nbr_States=4):
+def compute_TE(timeSeriesNodeA, timeSeriesNodeB, historyLength, Nbr_Initial_States, Nbr_States=2):
     '''
     Description:
     -- compute TE for every pair of nodes using distribution from all possible initial conditions or an arbitrary set of initial conditions
