@@ -1,0 +1,14 @@
+FirmA	0
+FirmB	0
+FirmC	0
+FirmD	0
+FirmE	0
+FirmF	0
+FirmG	0
+FirmH	0
+FirmI	0
+FirmJ	0
+FirmK	0
+FirmL	0
+FirmM	0
+FirmN	0
